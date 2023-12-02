@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">music3b</string>
+
+    <string name="Alex">Alex Music</string>
+    <string name="Blow">起风了</string>
+    <string name="Aua">买辣椒也用券</string>
+    <string name="one">0.25</string>
+    <string name="two">-0.25</string>
+</resources>
