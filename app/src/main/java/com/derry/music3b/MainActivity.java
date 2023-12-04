@@ -3,6 +3,7 @@ package com.derry.music3b;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,8 +13,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -157,4 +160,5 @@ public class MainActivity extends AppCompatActivity {
             playButton.setBackgroundResource(R.drawable.baseline_play_arrow_24);
         }
     }
+
 }
