@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         cur.close();
         cur = null;
-        return album_art;
+        return album_art ;
     }
 
 
