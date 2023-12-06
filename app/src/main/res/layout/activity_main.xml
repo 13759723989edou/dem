@@ -1,135 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/play"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="90dp"
-        android:background="@drawable/baseline_pause_24"
-        android:onClick="PlayButton" />
-
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/music" />
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/volume"
-        android:layout_marginBottom="60dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="40dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/baseline_volume_up_24" />
-
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="60dp"
-        android:layout_marginStart="40dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/baseline_favorite_border_24" />
-
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="60dp"
-        android:layout_marginEnd="40dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/baseline_error_outline_24" />
-
-    <SeekBar
-        android:id="@+id/volume"
+    android:background="@mipmap/bg2">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:layout_toEndOf="@id/img"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/local_music_bottomlayout"
+        android:background="#33EEEEEE">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#9933FA"/>
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/baseline_library_music_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/local_music_bottom_iv_icon"/>
+                    <TextView
+                        android:id="@+id/local_music_bottom_tv_song"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="起风了"
+                        android:layout_toRightOf="@+id/local_music_bottom_iv_icon"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/local_music_bottom_tv_singer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="买辣椒也用券"
+            android:textSize="12sp"
+            android:layout_below="@+id/local_music_bottom_tv_song"
+            android:layout_marginTop="10dp"/>
+        <ImageView
+            android:id="@+id/local_music_bottom_iv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/baseline_skip_next_24"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"/>
 
-        android:rotation="270"
-        android:thumb="@drawable/seekbar_thumb" />
+        <ImageView
+            android:id="@+id/local_music_bottom_iv_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/baseline_pause_24"
+            android:layout_toLeftOf="@+id/local_music_bottom_iv_next"
+            android:layout_marginRight="20dp"/>
 
-    <SeekBar
-        android:id="@+id/PlayLine"
+        <ImageView
+            android:id="@+id/local_music_bottom_iv_last"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/baseline_skip_previous_24"
+            android:layout_toLeftOf="@+id/local_music_bottom_iv_play"
+            android:layout_marginRight="20dp"/>
+
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/local_music_rv"
         android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:layout_above="@+id/play"
-        android:layout_marginBottom="13dp"
-        android:layout_marginEnd="30dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="@string/Alex"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/TextTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/img"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:text="@string/Blow"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/TextName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/TextTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/Aua"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/TextStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/PlayLine"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/one"
-        android:textColor="#FFECB3" />
-
-    <TextView
-        android:id="@+id/TextEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/PlayLine"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/one"
-        android:textColor="#FFECB3" />
-
+        android:layout_height="match_parent"
+        android:layout_above="@+id/local_music_bottomlayout">
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>
 
+
+<!--    <ListView-->
+<!--        android:id="@+id/list_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/list_item"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text=""-->
+    <!--        />-->
+
+</RelativeLayout>

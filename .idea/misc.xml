@@ -1,5 +1,11 @@
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectResources">
+    <resource url="/storage/self/primary/Music/周杰伦 - 不能说的秘密.mp3" location="$PROJECT_DIR$/../../BaiduNetdiskDownload/周杰伦 - 不能说的秘密.mp3" />
+    <resource url="/storage/self/primary/Music/周杰伦 - 我是如此相信 (1).mp3" location="$PROJECT_DIR$/../../BaiduNetdiskDownload/周杰伦 - 我是如此相信 (1).mp3" />
+    <resource url="/storage/self/primary/Music/周杰伦 - 给我一首歌的时间.mp3" location="$PROJECT_DIR$/../../BaiduNetdiskDownload/周杰伦 - 给我一首歌的时间.mp3" />
+    <resource url="/storage/self/primary/Music/周杰伦 - 说好的幸福呢.mp3" location="$PROJECT_DIR$/../../BaiduNetdiskDownload/周杰伦 - 说好的幸福呢.mp3" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
