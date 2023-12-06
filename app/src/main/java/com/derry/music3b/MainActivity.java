@@ -1,11 +1,8 @@
 package com.derry.music3b;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -24,8 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.SimpleTimeZone;
-import android.widget.RelativeLayout;
+
 import android.widget.Toast;
 
 
@@ -126,12 +122,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void OnItemClick(View view, int position) {
                 currnetPlayPosition = position;
                 LocalMusicBean musicBean = mDatas.get(position);
-                playMusicInMusicBean(musicBean);
+                playMusicInMusicInPosition(musicBean);
             }
         });
     }
 
-    public void playMusicInMusicBean(LocalMusicBean musicBean) {
+    public void playMusicInMusicInPosition(LocalMusicBean musicBean) {
         /*根据传入对象播放音乐*/
         //设置底部显示的歌手名称和歌曲名
         singerTv.setText(musicBean.getSinger());
@@ -206,93 +202,95 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void loadLocalMusicData(){
+    private void loadLocalMusicData() {
         /*加载本地存储当中的音乐mp3文件到集合当中*/
         //1、获取ContentResolver对象
         ContentResolver resolver = getContentResolver();
         //2、获取本地音乐存储的uri地址
-        Uri uri= MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
 
         //3、开始查询地址
         Cursor cursor = resolver.query(uri, null, null, null, null);
 
 
-        public List<LocalMusicBean>() {
-            List<LocalMusicBean> song = new ArrayList<>();
+//        public List<LocalMusicBean> retrieveSong() {
+        List<LocalMusicBean> song = new ArrayList<>();
 
-            Uri songUri = MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL);
-            String[] projection = {
-                    MediaStore.Audio.Media._ID,
-                    MediaStore.Audio.Media.DISPLAY_NAME,
-                    MediaStore.Audio.Media.ARTIST,
-                    MediaStore.Audio.Media.DURATION,
-                    MediaStore.Audio.Media.DATA,
-                    MediaStore.Audio.Media.ALBUM_ID;
+        Uri songUri = MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL);
+        String[] projection = {
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.DISPLAY_NAME,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media.ALBUM_ID
+        };
+
+        String selection = MediaStore.Audio.Media.IS_MUSIC + "!=0";
+        String sortOrder = MediaStore.Audio.Media.DISPLAY_NAME + " ASC";
+
+        Cursor cursor1 = getContentResolver().query(songUri, projection, selection, null, sortOrder);
+        ;
+        if (cursor != null) {
+            int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID);
+            int titleColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME);
+            int artistColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST);
+            int durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION);
+            int albumIdColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID);
+            int dataColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA);
+
+            //4、遍历Cursor
+            int id = 0;
+            while (cursor.moveToNext()) {
+                String title = cursor.getString(titleColumn);
+                String artist = cursor.getString(artistColumn);
+                String album = cursor.getString(albumIdColumn);
+                id++;
+                String sid = String.valueOf(id);
+                String data = cursor.getString(dataColumn);
+                long duration = cursor.getLong(durationColumn);
+                SimpleDateFormat sdf = new SimpleDateFormat("mm;ss");
+                String time = sdf.format(new Date(duration));
+                //将一行当中的数据封装到对象当中
+                new LocalMusicBean(sid, title, artist, time, data);
+                mDatas.add(new LocalMusicBean());
+                //val song= Song(title,artist,id,duration,albumId)
+
             }
-
-            String selection = MediaStore.Audio.Media.IS_MUSIC + "!=0";
-            String sortOrder = MediaStore.Audio.Media.DISPLAY_NAME + " ASC";
-
-            Cursor cursor1= getContentResolver().query(songUri, projection, selection, null, sortOrder);;
-            if (cursor != null) {
-                int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID);
-                int titleColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME);
-                int artistColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST);
-                int durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION);
-                int albumIdColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID);
-                int dataColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA);
-
-                //4、遍历Cursor
-        int id=0;
-        while (cursor.moveToNext()) {
-            String title = cursor.getString(titleColumn);
-            String artist = cursor.getString(artistColumn);
-            String album = cursor.getString(albumIdColumn);
-            id++;
-            String sid = String.valueOf(id);
-            String data = cursor.getString(dataColumn);
-            long duration = cursor.getLong(durationColumn);
-            SimpleDateFormat sdf = new SimpleDateFormat("mm;ss");
-            String time = sdf.format(new Date(duration));
-            //将一行当中的数据封装到对象当中
-            new LocalMusicBean(sid,title,artist,time,data);
-            mDatas.add(new LocalMusicBean());
-            //val song= Song(title,artist,id,duration,albumId)
-
-
         }
         //数据源变化，提示适配器更新
         adapter.notifyDataSetChanged();
-    }
-    private String getAlbumArt(String album_id) {
-        String mUriAlbums = "content://media/external/audio/albums";
-        String[] projection = new String[]{"album_art"};
-        Cursor cur = this.getContentResolver().query(
-                Uri.parse(mUriAlbums + "/" + album_id),
-                projection, null, null, null);
-        String album_art = null;
-        if (cur.getCount() > 0 && cur.getColumnCount() > 0) {
-            cur.moveToNext();
-            album_art = cur.getString(0);
-        }
-        cur.close();
-        cur = null;
-        return album_art;
-    }
+
+//    private String getAlbumArt(String album_id) {
+//        String mUriAlbums = "content://media/external/audio/albums";
+//        String[] projection = new String[]{"album_art"};
+//        Cursor cur = this.getContentResolver().query(
+//                Uri.parse(mUriAlbums + "/" + album_id),
+//                projection, null, null, null);
+//        String album_art = null;
+//        if (cur.getCount() > 0 && cur.getColumnCount() > 0) {
+//            cur.moveToNext();
+//            album_art = cur.getString(0);
+//        }
+//        cur.close();
+//        cur = null;
+//        return album_art;
+//    }
 
 
-    public void initView(){
-        /*初始化控件的函数*/
-        nextIv=findViewById(R.id.local_music_bottom_iv_next);
-        playIv=findViewById(R.id.local_music_bottom_iv_play);
-        lastIv=findViewById(R.id.local_music_bottom_iv_last);
-        singerTv=findViewById(R.id.local_music_bottom_tv_singer);
-        songTv=findViewById(R.id.local_music_bottom_tv_song);
-        musicRv=findViewById(R.id.local_music_rv);
-        nextIv.setOnClickListener(this);
-        lastIv.setOnClickListener(this);
-        playIv.setOnClickListener(this);
     }
+//    public void initView(){
+//        /*初始化控件的函数*/
+//        nextIv=findViewById(R.id.local_music_bottom_iv_next);
+//        playIv=findViewById(R.id.local_music_bottom_iv_play);
+//        lastIv=findViewById(R.id.local_music_bottom_iv_last);
+//        singerTv=findViewById(R.id.local_music_bottom_tv_singer);
+//        songTv=findViewById(R.id.local_music_bottom_tv_song);
+//        musicRv=findViewById(R.id.local_music_rv);
+//        nextIv.setOnClickListener(this);
+//        lastIv.setOnClickListener(this);
+//        playIv.setOnClickListener(this);
+//    }
     @Override
     public void onClick(View v){
         switch (v.getId()){
