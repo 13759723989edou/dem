@@ -1,7 +1,4 @@
 package com.derry.music3b;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -15,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -22,7 +20,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 //public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -71,33 +71,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView nextIv,playIv,lastIv,albumIv;
     TextView singerTv,songTv;
     RecyclerView musicRv;
+
+
 //数据源
     List<LocalMusicBean>mDatas;
     private LocalMusicAdapter adapter;
 
 //记录当前正在播放的音乐位置
     int currnetPlayPosition=-1;
-    //    记录暂停音乐时进度条的位置
+//记录暂停音乐时进度条的位置
     int currentPausePositionInSong = 0;
     MediaPlayer mediaPlayer;
     private LocalMusicBean v;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        mediaPlayer=new MediaPlayer();
-        mDatas=new ArrayList<>();
+        mediaPlayer = new MediaPlayer();
+        mDatas = new ArrayList<>();
 //创建适配器
         adapter = new LocalMusicAdapter(this, mDatas);
         musicRv.setAdapter(adapter);
-        //设置布局管理器
+//设置布局管理器
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);//vertical垂直滑动
         musicRv.setLayoutManager(layoutManager);
-        //加载本地数据源
+ //加载本地数据源
         loadLocalMusicData();
-        //        设置每一项的点击事件
+// 设置每一项的点击事件
         setEventListener();
     }
 
@@ -113,6 +115,76 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lastIv.setOnClickListener(this);
         playIv.setOnClickListener(this);
     }
+    @Override
+    public void onClick(View view){
+        int id=view.getId();
+        if (id==R.id.local_music_bottom_iv_last){
+            if (currnetPlayPosition ==0) {
+                Toast.makeText(this,"已经是第一首了，没有上一曲！",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            currnetPlayPosition = currnetPlayPosition-1;
+            LocalMusicBean lastBean = mDatas.get(currnetPlayPosition);
+            playMusicInMusicBean(lastBean);
+        }
+        if (id==R.id.local_music_bottom_iv_next) {
+            if (currnetPlayPosition ==mDatas.size()-1) {
+                    Toast.makeText(this,"已经是最后一首了，没有下一曲！",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                currnetPlayPosition = currnetPlayPosition+1;
+                LocalMusicBean nextBean = mDatas.get(currnetPlayPosition);
+                playMusicInMusicBean(nextBean);
+        }
+        if (id==R.id.local_music_bottom_iv_play){
+            if (currnetPlayPosition == -1) {
+//            并没有选中要播放的音乐
+                    Toast.makeText(this, "请选择想要播放的音乐", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (mediaPlayer.isPlaying()) {
+//          此时处于播放状态，需要暂停音乐
+                    pauseMusic();
+                }else {
+//             此时没有播放音乐，点击开始播放音乐
+                    playMusic();
+                }
+        }
+//        switch (v.getId()){
+//            case R.id.local_music_buttom_iv_last:
+//                if (currnetPlayPosition ==0) {
+//                    Toast.makeText(this,"已经是第一首了，没有上一曲！",Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                currnetPlayPosition = currnetPlayPosition-1;
+//                LocalMusicBean lastBean = mDatas.get(currnetPlayPosition);
+//                playMusicInMusicBean(lastBean);
+//                break;
+//            case R.id.local_music_bottom_iv_next:
+//                if (currnetPlayPosition ==mDatas.size()-1) {
+//                    Toast.makeText(this,"已经是最后一首了，没有下一曲！",Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                currnetPlayPosition = currnetPlayPosition+1;
+//                LocalMusicBean nextBean = mDatas.get(currnetPlayPosition);
+//                playMusicInMusicBean(nextBean);
+//                break;
+//            case R.id.local_music_bottom_iv_play:
+//                if (currnetPlayPosition == -1) {
+////                    并没有选中要播放的音乐
+//                    Toast.makeText(this, "请选择想要播放的音乐", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (mediaPlayer.isPlaying()) {
+////                    此时处于播放状态，需要暂停音乐
+//                    pauseMusic();
+//                }else {
+////                    此时没有播放音乐，点击开始播放音乐
+//                    playMusic();
+//                }
+//                break;
+
+    }
 
 
     private void setEventListener() {
@@ -122,12 +194,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void OnItemClick(View view, int position) {
                 currnetPlayPosition = position;
                 LocalMusicBean musicBean = mDatas.get(position);
-                playMusicInMusicInPosition(musicBean);
+                playMusicInMusicBean(musicBean);
             }
         });
     }
 
-    public void playMusicInMusicInPosition(LocalMusicBean musicBean) {
+    public void playMusicInMusicBean(LocalMusicBean musicBean) {
         /*根据传入对象播放音乐*/
         //设置底部显示的歌手名称和歌曲名
         singerTv.setText(musicBean.getSinger());
@@ -172,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mediaPlayer.seekTo(currentPausePositionInSong);
                 mediaPlayer.start();
             }
-            playIv.setImageResource(R.mipmap.icon_pause);
+            playIv.setImageResource(R.drawable.baseline_pause_24);
         }
     }
     private void pauseMusic() {
@@ -230,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String sortOrder = MediaStore.Audio.Media.DISPLAY_NAME + " ASC";
 
         Cursor cursor1 = getContentResolver().query(songUri, projection, selection, null, sortOrder);
-        ;
+
         if (cursor != null) {
             int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID);
             int titleColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME);
@@ -291,41 +363,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        lastIv.setOnClickListener(this);
 //        playIv.setOnClickListener(this);
 //    }
-    @Override
-    public void onClick(View v){
-        switch (v.getId()){
-            case R.id.local_music_bottom_iv_last:
-                if (currnetPlayPosition ==0) {
-                    Toast.makeText(this,"已经是第一首了，没有上一曲！",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                currnetPlayPosition = currnetPlayPosition-1;
-                LocalMusicBean lastBean = mDatas.get(currnetPlayPosition);
-                playMusicInMusicBean(lastBean);
-                break;
-            case R.id.local_music_bottom_iv_next:
-                if (currnetPlayPosition ==mDatas.size()-1) {
-                    Toast.makeText(this,"已经是最后一首了，没有下一曲！",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                currnetPlayPosition = currnetPlayPosition+1;
-                LocalMusicBean nextBean = mDatas.get(currnetPlayPosition);
-                playMusicInMusicBean(nextBean);
-                break;
-            case R.id.local_music_bottom_iv_play:
-                if (currnetPlayPosition == -1) {
-//                    并没有选中要播放的音乐
-                    Toast.makeText(this, "请选择想要播放的音乐", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (mediaPlayer.isPlaying()) {
-//                    此时处于播放状态，需要暂停音乐
-                    pauseMusic();
-                }else {
-//                    此时没有播放音乐，点击开始播放音乐
-                    playMusic();
-                }
-                break;
-        }
-    }
+
 }

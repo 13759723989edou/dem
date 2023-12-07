@@ -1,6 +1,7 @@
 package com.derry.music3b;
 
 import android.icu.text.CaseMap;
+import android.util.Log;
 
 public class LocalMusicBean {
     private String id;//歌曲id
@@ -22,6 +23,7 @@ public class LocalMusicBean {
         this.duration = duration;
         this.path = path;
         this.albumArt = albumArt;
+
     }
 
     public LocalMusicBean(String sid, String song, String singer, String time, String path) {
@@ -92,5 +94,7 @@ public class LocalMusicBean {
     public void setPath(String path) {
 
         this.path = path;
+
     }
+
 }
