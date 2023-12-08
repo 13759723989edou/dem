@@ -1,6 +1,7 @@
 package com.derry.music3b;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     MediaPlayer mediaPlayer;
     private LocalMusicBean v;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +103,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadLocalMusicData();
 // 设置每一项的点击事件
         setEventListener();
+
+//跳转到下一个界面
+        setContentView(R.layout.activity_main);
+        TextView textView=findViewById(R.id.local_music_bottom_tv_song);
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+//在点击事件中实现跳转到下一个界面的逻辑
+                Intent intent=new Intent(MainActivity.this,MusicActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView() {
