@@ -14,9 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.LocalMusicViewHolder> {
-         Context context;
+//适配器负责将音乐数据列表数据musicBeanList与RecyclerView中的每个项进行绑定
+    Context context;
 
-     List<LocalMusicBean>song;
+    private List<LocalMusicBean>musicBeanList;
+    public LocalMusicAdapter(List<LocalMusicBean>musicBeanList){
+        this.musicBeanList=musicBeanList;
+    }
 
     OnItemClickListener onItemClickListener;
 
@@ -28,20 +32,22 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Lo
     public interface OnItemClickListener{
         public void OnItemClick(View view,int position);//OnItemClick 调用接口
     }
-    public LocalMusicAdapter(Context context, List<LocalMusicBean> mDatas) {
+    public LocalMusicAdapter(Context context, List<LocalMusicBean> musicBeanList) {
         this.context = context;
-        this.song = mDatas;
+        this.musicBeanList = musicBeanList;
     }
     @NonNull
     @Override
     public LocalMusicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.item_local_music,parent,false);
+        View view= LayoutInflater.from(context).inflate(R.layout.activity_main,parent,false);
         return new LocalMusicViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LocalMusicViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        LocalMusicBean musicBean = song.get(position);
+
+    public void onBindViewHolder(@NonNull LocalMusicViewHolder holder, int position) {
+//绑定数据到ViewHolder的视图
+        LocalMusicBean musicBean = musicBeanList.get(position);
         holder.idTv.setText(musicBean.getId());
         holder.songTv.setText(musicBean.getSong());
         holder.singerTv.setText(musicBean.getSinger());
@@ -56,10 +62,13 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Lo
             }
         });
     }
+//在 `onCreateViewHolder()` 方法中，你可以创建 RecyclerView 的每个项的视图，并将其封装到一个 ViewHolder 对象中返回。
 
     @Override
     public int getItemCount() {
-        return song.size();
+//在使用 RecyclerView 和自定义适配器时，你需要重写 `getItemCount()` 方法来告诉 RecyclerView 有多少项需要显示。
+//RecyclerView 在布局和滚动时，会根据这个返回值来确定需要创建和绑定的视图数量。
+        return musicBeanList.size();
     }
 
 
@@ -75,10 +84,9 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Lo
             Log.d("Music3b","检索本地音乐完成");
         }
     }
-
-
-
 }
+//`LocalMusicAdapter` 是自定义的适配器类，它继承自 RecyclerView.Adapter，
+// 并使用 ViewHolder 模式来管理每个项的视图。
 
 
 

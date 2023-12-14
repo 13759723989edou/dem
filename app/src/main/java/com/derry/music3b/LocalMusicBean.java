@@ -1,8 +1,5 @@
 package com.derry.music3b;
 
-import android.icu.text.CaseMap;
-import android.util.Log;
-
 public class LocalMusicBean {
     private String id;//歌曲id
     private String song;
@@ -10,8 +7,8 @@ public class LocalMusicBean {
     private String album;
     private String duration;//歌曲时长
     private String path;//歌曲路径
-    private String albumArt;  //专辑地址
-    public LocalMusicBean() {
+
+    public LocalMusicBean(String sid, String title) {
 
     }
 
@@ -22,19 +19,11 @@ public class LocalMusicBean {
         this.album = album;
         this.duration = duration;
         this.path = path;
-        this.albumArt = albumArt;
 
     }
 
-    public LocalMusicBean(String sid, String song, String singer, String time, String path) {
-    }
-
-    public String getAlbumArt() {
-        return albumArt;
-    }
-    public void setAlbumArt(String albumArt) {
-        this.albumArt = albumArt;
-    }
+//    public LocalMusicBean(String sid, String song, String singer, String time, String path) {
+//    }
 
     public String getId() {
 
