@@ -8,10 +8,6 @@ public class LocalMusicBean {
     private String duration;//歌曲时长
     private String path;//歌曲路径
 
-    public LocalMusicBean(String sid, String title) {
-
-    }
-
     public LocalMusicBean(String id, String song, String singer, String album, String duration, String path) {
         this.id = id;
         this.song = song;
@@ -19,11 +15,8 @@ public class LocalMusicBean {
         this.album = album;
         this.duration = duration;
         this.path = path;
-
     }
 
-//    public LocalMusicBean(String sid, String song, String singer, String time, String path) {
-//    }
 
     public String getId() {
 

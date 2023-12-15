@@ -1,6 +1,5 @@
 package com.derry.music3b;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,13 +17,20 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Lo
     Context context;
 
     private List<LocalMusicBean>musicBeanList;
-    public LocalMusicAdapter(List<LocalMusicBean>musicBeanList){
+    //LocalMusicBean是数据项类型,声明了一个名为musicBeanList的列表，用于存储数据源
+    public LocalMusicAdapter(){
         this.musicBeanList=musicBeanList;
     }
-
+//`setData()` 方法接收一个数据列表作为参数，并将该数据列表赋值给适配器中的数据源变量。这样，适配器就知道要显示哪些数据项。
+    public void setData(List<LocalMusicBean>data){
+        this.musicBeanList = data;
+        notifyDataSetChanged();
+    }
+//setData()方法接收一个名为data的List<LocalMusicBean>参数，并将其赋值给musicBeanList变量
+//然后调用notifyDataSetChanged()方法，通知适配器数据发生了变化，以便更新RecyclerView中的列表项
     OnItemClickListener onItemClickListener;
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    public static void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;//setOnItemClickListener 传递接口
         Log.d("Music3b","开始检索本地音乐");
     }
@@ -42,7 +48,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Lo
         View view= LayoutInflater.from(context).inflate(R.layout.activity_main,parent,false);
         return new LocalMusicViewHolder(view);
     }
-
+//layoutInflater是Android 中用于将布局文件转换为视图对象的类
     @Override
 
     public void onBindViewHolder(@NonNull LocalMusicViewHolder holder, int position) {

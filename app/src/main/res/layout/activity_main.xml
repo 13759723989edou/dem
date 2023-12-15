@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,12 +33,20 @@
             android:hint="网络歌曲"/>
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/MusicListView"
+        android:layout_width="match_parent"
+        android:layout_height="750dp"
+        android:layout_below="@id/LinearLayout1"
+        android:layout_marginTop="6dp" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:id="@+id/local_music_bottom_layout"
         android:background="#33EEEEEE">
+
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -92,16 +101,11 @@
             android:src="@drawable/baseline_skip_previous_24"
             android:layout_toLeftOf="@+id/local_music_bottom_iv_play"
             android:layout_marginRight="20dp"/>
+
     </RelativeLayout>
 
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/MusicListView"
-        android:layout_width="match_parent"
-        android:layout_height="750dp"
-        android:layout_below="@id/LinearLayout1"/>
 </RelativeLayout>
+
     <!--<?xml version="1.0" encoding="utf-8"?>-->
     <!--<RelativeLayout-->
     <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->

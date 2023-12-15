@@ -47,6 +47,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
-
+    implementation ("com.google.android.exoplayer:exoplayer-core:2.19.0")
+    implementation ("com.google.android.exoplayer:exoplayer-ui:2.19.0")
+// 如果需要使用 ExoPlayer 的默认 UI 控件
 
 }
