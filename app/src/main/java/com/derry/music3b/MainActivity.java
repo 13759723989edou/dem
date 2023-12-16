@@ -66,9 +66,9 @@ import androidx.recyclerview.widget.RecyclerView;
 //    }
 //}
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    ImageView nextIv,playIv,lastIv,albumIv;
+    ImageView nextIv,playIv,lastIv;
     TextView singerTv,songTv;
-    RecyclerView musicRv;
+    //RecyclerView musicRv;
 
 
 //数据源
@@ -133,22 +133,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (musicFiles != null) {
             for (File musicFile : musicFiles) {
                 if (musicFile.isFile() && musicFile.getName().endsWith(".mp3")) {
-                    // 处理音乐文件
+                // 处理音乐文件
                     String title = getTitleFromFilePath(musicFile.getAbsolutePath());
                     String singer = getSingerFromFilePath(musicFile.getAbsolutePath());
-
-                    // 创建 LocalMusicBean  对象并设置属性
-
-                    // 设置其他属性...
+                // 创建 LocalMusicBean  对象并设置属性
+                    LocalMusicBean music = new LocalMusicBean();
+                    // 设置音乐标题
+                    music.setSong("My Song");
+                    // 设置音乐艺术家
+                    music.setSinger("John Doe");
+                    // 设置音乐时长
+                    music.setDuration(240);
+                    // 获取音乐标题
+                    String song = music.getSong();
+                    // 获取音乐艺术家
+                    String artist = music.getSinger();
+                    // 获取音乐时长
+                    int duration = music.getDuration();
+                // 设置其他属性...
 
                     // 将 LocalMusicBean 对象添加到列表中
                     musicBeanList.add((LocalMusicBean) musicBeanList);
                 }
             }
         }
-
-
     }
+
 
     private String getTitleFromFilePath(String absolutePath) {
         return null;
@@ -161,17 +171,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initialize(){
     View localMusic = findViewById(R.id.localMusic);
     View httpMusic = findViewById(R.id.httpMusic);
-//    localMusic.setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            Intent intent=new Intent(MainActivity.this,SongListActivity.class);
-//            startActivity(intent);
-//        }
-//    });
+    localMusic.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent=new Intent(MainActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
+    });
     httpMusic.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent1=new Intent(MainActivity.this,HttpActivity.class);
+            Intent intent1=new Intent(MainActivity.this, HttpActivity.class);
             startActivity(intent1);
         }
     });
@@ -183,51 +193,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lastIv=findViewById(R.id.local_music_bottom_iv_last);
         singerTv=findViewById(R.id.local_music_bottom_tv_singer);
         songTv=findViewById(R.id.local_music_bottom_tv_song);
-        //musicRv=findViewById(R.id.local_music_rv);
         nextIv.setOnClickListener(this);
         lastIv.setOnClickListener(this);
         playIv.setOnClickListener(this);
     }
     @Override
     public void onClick(View view){
-//        int id=view.getId();
-//        if (id==R.id.local_music_bottom_iv_last){
-//            if (currnetPlayPosition ==0) {
-//                Toast.makeText(this,"已经是第一首了，没有上一曲！",Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//            currnetPlayPosition = currnetPlayPosition-1;
-//            LocalMusicBean lastBean = musicBeanList.get(currnetPlayPosition);
-//            playMusicInMusicBean(lastBean);
-//        }
-//        if (id==R.id.local_music_bottom_iv_next) {
-//            if (currnetPlayPosition ==musicBeanList.size()-1) {
-//                    Toast.makeText(this,"已经是最后一首了，没有下一曲！",Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                currnetPlayPosition = currnetPlayPosition+1;
-//                LocalMusicBean nextBean = musicBeanList.get(currnetPlayPosition);
-//                playMusicInMusicBean(nextBean);
-//        }
-//        if (id==R.id.local_music_bottom_iv_play){
-//            if (currnetPlayPosition == -1) {
-////            并没有选中要播放的音乐
-//                    Toast.makeText(this, "请选择想要播放的音乐", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                if (mediaPlayer.isPlaying()) {
-////          此时处于播放状态，需要暂停音乐
-//                    pauseMusic();
-//                }else {
-////             此时没有播放音乐，点击开始播放音乐
-//                    playMusic();
-//                }
-//        }
+        int id=view.getId();
+        if (id==R.id.local_music_bottom_iv_last){
+            if (currnetPlayPosition ==0) {
+                Toast.makeText(this,"已经是第一首了，没有上一曲！",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            currnetPlayPosition = currnetPlayPosition-1;
+            LocalMusicBean lastBean = musicBeanList.get(currnetPlayPosition);
+            //playMusicInMusicBean(lastBean);
+        }
+        if (id==R.id.local_music_bottom_iv_next) {
+            if (currnetPlayPosition ==musicBeanList.size()-1) {
+                    Toast.makeText(this,"已经是最后一首了，没有下一曲！",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                currnetPlayPosition = currnetPlayPosition+1;
+                LocalMusicBean nextBean = musicBeanList.get(currnetPlayPosition);
+                //playMusicInMusicBean(nextBean);
+        }
+        if (id==R.id.local_music_bottom_iv_play){
+            if (currnetPlayPosition == -1) {
+//            并没有选中要播放的音乐
+                    Toast.makeText(this, "请选择想要播放的音乐", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (mediaPlayer.isPlaying()) {
+//          此时处于播放状态，需要暂停音乐
+                    pauseMusic();
+                }else {
+//             此时没有播放音乐，点击开始播放音乐
+                    playMusic();
+                }
+        }
     }
 
 
     private void setEventListener() {
         /* 设置每一项的点击事件*/
+        LocalMusicAdapter LocalMusicAdapter = new LocalMusicAdapter();
         LocalMusicAdapter.setOnItemClickListener(new LocalMusicAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
@@ -266,33 +276,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //     * 1.从暂停到播放
 //     * 2.从停止到播放
 //     * */
-//    private void playMusic() {
+    private void playMusic() {
 //        /* 播放音乐的函数*/
-//        if (mediaPlayer!=null&&!mediaPlayer.isPlaying()) {
-//            if (currentPausePositionInSong == 0) {
-//                try {
-//                    mediaPlayer.prepare();
-//                    mediaPlayer.start();
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }else{
-////                从暂停到播放
-//                mediaPlayer.seekTo(currentPausePositionInSong);
-//                mediaPlayer.start();
-//            }
-//            playIv.setImageResource(R.drawable.baseline_pause_24);
-//        }
-//    }
-//    private void pauseMusic() {
-//        /* 暂停音乐的函数*/
-//        if (mediaPlayer!=null&&mediaPlayer.isPlaying()) {
-//            currentPausePositionInSong = mediaPlayer.getCurrentPosition();
-//            mediaPlayer.pause();
-//            playIv.setImageResource(R.mipmap.icon_play);
-//        }
-//    }
+        if (mediaPlayer!=null&&!mediaPlayer.isPlaying()) {
+            if (currentPausePositionInSong == 0) {
+                try {
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+
+                }
+                //catch (IOException e) {
+                   // e.printStackTrace();
+                //}
+                catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }else{
+//                从暂停到播放
+                mediaPlayer.seekTo(currentPausePositionInSong);
+                mediaPlayer.start();
+            }
+            playIv.setImageResource(R.drawable.baseline_pause_24);
+        }
+   }
+    private void pauseMusic() {
+        /* 暂停音乐的函数*/
+        if (mediaPlayer!=null&&mediaPlayer.isPlaying()) {
+            currentPausePositionInSong = mediaPlayer.getCurrentPosition();
+            mediaPlayer.pause();
+            playIv.setImageResource(R.mipmap.icon_play);
+        }
+    }
     private void stopMusic() {
 //        /* 停止音乐的函数*/
 //        if (mediaPlayer!=null) {
@@ -311,29 +325,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stopMusic();
     }
 
-
+//
     private List<LocalMusicBean> musicBeanList() {
-        List<LocalMusicBean>musicBeansList= new ArrayList<>();
-        ContentResolver contentResolver=getContentResolver();
-        Cursor cursor=null;//Cursor 是一种用于遍历查询结果集的接口
-        try{
-            cursor=contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,null,null,null
-            ,null,null);
-            if (cursor!=null&&cursor.moveToFirst()){
-                int titleColumn=cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
-                int artistColumn=cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+        List<LocalMusicBean> musicBeansList = new ArrayList<>();
+        ContentResolver contentResolver = getContentResolver();
+        Cursor cursor = null;//Cursor 是一种用于遍历查询结果集的接口
+        try {
+            cursor = contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null
+                    , null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int titleColumn = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
+                int artistColumn = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+                //int durationColumn=cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
                 do {
-                    String title=cursor.getString(titleColumn);
-                    String artist=cursor.getString(artistColumn);
-
+                    String song = cursor.getString(titleColumn);
+                    String artist = cursor.getString(artistColumn);
                     musicBeanList.add((LocalMusicBean) musicBeanList);
-                }while (cursor.moveToNext());//cursor.moveToNext()用于检查是否还有下一行数据可供遍历
+                } while (cursor.moveToNext());//cursor.moveToNext()用于检查是否还有下一行数据可供遍历
             }
-        }catch (Exception e){
-            Log.e("localMusicList","Error retrieving music data:"+e.getMessage());
+        } catch (Exception e) {
+            Log.e("localMusicList", "Error retrieving music data:" + e.getMessage());
 
-        }finally {
-            if (cursor!=null){
+        } finally {
+            if (cursor != null) {
                 cursor.close();
             }
         }

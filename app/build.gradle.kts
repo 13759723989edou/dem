@@ -50,5 +50,6 @@ dependencies {
     implementation ("com.google.android.exoplayer:exoplayer-core:2.19.0")
     implementation ("com.google.android.exoplayer:exoplayer-ui:2.19.0")
 // 如果需要使用 ExoPlayer 的默认 UI 控件
-
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.1")
 }

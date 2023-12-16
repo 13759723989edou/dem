@@ -15,8 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.LocalMusicViewHolder> {
 //适配器负责将音乐数据列表数据musicBeanList与RecyclerView中的每个项进行绑定
     Context context;
-
     private List<LocalMusicBean>musicBeanList;
+    private OnItemClickListener onItemClickListener;
+
     //LocalMusicBean是数据项类型,声明了一个名为musicBeanList的列表，用于存储数据源
     public LocalMusicAdapter(){
         this.musicBeanList=musicBeanList;
@@ -28,11 +29,11 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Lo
     }
 //setData()方法接收一个名为data的List<LocalMusicBean>参数，并将其赋值给musicBeanList变量
 //然后调用notifyDataSetChanged()方法，通知适配器数据发生了变化，以便更新RecyclerView中的列表项
-    OnItemClickListener onItemClickListener;
+//    OnItemClickListener onItemClickListener;
+LocalMusicAdapter localMusicAdapter=new LocalMusicAdapter();
 
-    public static void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;//setOnItemClickListener 传递接口
-        Log.d("Music3b","开始检索本地音乐");
     }
 
     public interface OnItemClickListener{
@@ -53,18 +54,19 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Lo
 
     public void onBindViewHolder(@NonNull LocalMusicViewHolder holder, int position) {
 //绑定数据到ViewHolder的视图
+        int adapterPosition = holder.getBindingAdapterPosition();
         LocalMusicBean musicBean = musicBeanList.get(position);
         holder.idTv.setText(musicBean.getId());
         holder.songTv.setText(musicBean.getSong());
         holder.singerTv.setText(musicBean.getSinger());
-        holder.albumTv.setText(musicBean.getAlbum());
         holder.timeTv.setText(musicBean.getDuration());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
 
-                onItemClickListener.OnItemClick(view,position);//接口对调
+                OnItemClickListener onItemClickListener = null;
+                onItemClickListener.OnItemClick(view,adapterPosition);//接口对调
             }
         });
     }
@@ -85,15 +87,9 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Lo
             idTv=itemView.findViewById(R.id.item_local_music_num);
             songTv=itemView.findViewById(R.id.item_local_music_song);
             singerTv=itemView.findViewById(R.id.item_local_music_singer);
-            albumTv=itemView.findViewById(R.id.item_local_music_album);
             timeTv=itemView.findViewById(R.id.item_local_music_durtion);
-            Log.d("Music3b","检索本地音乐完成");
         }
     }
 }
 //`LocalMusicAdapter` 是自定义的适配器类，它继承自 RecyclerView.Adapter，
 // 并使用 ViewHolder 模式来管理每个项的视图。
-
-
-
-
