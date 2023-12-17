@@ -36,7 +36,7 @@ public class HttpActivity extends AppCompatActivity {
                 // 处理请求失败的情况
             }
         });
-        TextView textView=findViewById(R.id.httpMusic);
+        TextView textView=findViewById(R.id.HttpMusic);
         textView.setOnClickListener(new View.OnClickListener() {
           @Override
          public void onClick(View view){

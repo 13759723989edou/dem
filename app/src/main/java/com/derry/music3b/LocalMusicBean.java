@@ -12,7 +12,7 @@ public class LocalMusicBean {
         this.id = id;
         this.song = song;
         this.singer = singer;
-        this.album = album;
+        //this.album = album;
         this.duration = duration;
         this.path = path;
     }
@@ -42,13 +42,13 @@ public class LocalMusicBean {
         this.singer = singer;
     }
 
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
-    }
+//    public String getAlbum() {
+//        return album;
+//    }
+//
+//    public void setAlbum(String album) {
+//        this.album = album;
+//    }
 
     public int  getDuration() {
         return duration;
