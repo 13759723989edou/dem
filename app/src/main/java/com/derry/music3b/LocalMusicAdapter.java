@@ -29,8 +29,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Lo
 //    }
 //setData()方法接收一个名为data的List<LocalMusicBean>参数，并将其赋值给musicBeanList变量
 //然后调用notifyDataSetChanged()方法，通知适配器数据发生了变化，以便更新RecyclerView中的列表项
-//    OnItemClickListener onItemClickListener;
-LocalMusicAdapter localMusicAdapter=new LocalMusicAdapter();
+
 
 public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;//setOnItemClickListener 传递接口

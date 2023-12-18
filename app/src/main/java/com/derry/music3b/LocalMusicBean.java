@@ -1,5 +1,8 @@
 package com.derry.music3b;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+import android.content.Context;
 public class LocalMusicBean {
     private String id;//歌曲id
     private String song;
@@ -8,7 +11,21 @@ public class LocalMusicBean {
     private int duration;//歌曲时长
     private String path;//歌曲路径
 
-    public LocalMusicBean() {
+    public LocalMusicBean(Context context, String song, String singer) {
+        this.song = song;
+        this.singer = singer;
+        // Initialize the database helper and get the writable database
+        MyDatabaseHelper dbHelper = new MyDatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        // Perform any necessary database operations here
+        ContentValues values = new ContentValues();
+        values.put("song", song);
+        values.put("singer", singer);
+        db.insert("music_table", null, values);
+        // Close the database
+        db.close();
+    }
+    public LocalMusicBean(String song, String singer) {
         this.id = id;
         this.song = song;
         this.singer = singer;

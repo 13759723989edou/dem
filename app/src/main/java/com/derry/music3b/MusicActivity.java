@@ -46,8 +46,6 @@ public class MusicActivity extends AppCompatActivity {
         endText = findViewById(R.id.TextEnd);
         imageView = findViewById(R.id.img);
         animation = AnimationUtils.loadAnimation(this,R.anim.rotation);
-//找到btn_exit按钮
-        View exit = findViewById(R.id.btn_exit);
 //为btn_exit设置点击事件监听器
         Button btnExit=findViewById(R.id.btn_exit);
         btnExit.setOnClickListener(new View.OnClickListener() {
@@ -175,28 +173,6 @@ public class MusicActivity extends AppCompatActivity {
 
 }
 //package com.derry.music3b;
-//
-//        import androidx.annotation.RequiresApi;
-//        import androidx.appcompat.app.AppCompatActivity;
-//
-//        import android.animation.ObjectAnimator;
-//        import android.content.ComponentName;
-//        import android.content.Intent;
-//        import android.content.ServiceConnection;
-//        import android.os.Build;
-//        import android.os.Bundle;
-//        import android.os.Handler;
-//        import android.os.IBinder;
-//        import android.os.Message;
-//        import android.view.View;
-//        import android.view.animation.LinearInterpolator;
-//        import android.widget.Button;
-//        import android.widget.ImageView;
-//        import android.widget.SeekBar;
-//        import android.widget.TextView;
-//
-//        import static java.lang.Integer.parseInt;
-//
 //public class MusicActivity extends AppCompatActivity implements View.OnClickListener{
 //    //进度条
 //    private static SeekBar sb;

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@mipmap/bg2">
 
     <LinearLayout
         android:id="@+id/LinearLayout1"
@@ -75,32 +76,32 @@
             android:textSize="12sp"
             android:layout_below="@+id/local_music_bottom_tv_song"
             android:layout_marginTop="10dp"/>
-        <ImageView
+        <Button
             android:id="@+id/local_music_bottom_iv_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/baseline_skip_next_24"
+            android:background="@drawable/baseline_skip_next_24"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"/>
 
-        <ImageView
+        <Button
             android:id="@+id/local_music_bottom_iv_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/baseline_pause_24"
+            android:background="@drawable/baseline_pause_24"
             android:layout_toLeftOf="@+id/local_music_bottom_iv_next"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="10dp"/>
 
-        <ImageView
+        <Button
             android:id="@+id/local_music_bottom_iv_last"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/baseline_skip_previous_24"
+            android:background="@drawable/baseline_skip_previous_24"
             android:layout_toLeftOf="@+id/local_music_bottom_iv_play"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="10dp"/>
 
     </RelativeLayout>
 
@@ -185,26 +186,6 @@
     <!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
     <!--&lt;!&ndash;            android:background="@android:color/transparent"&ndash;&gt;-->
     <!--&lt;!&ndash;            android:text="My Button"/>&ndash;&gt;-->
-
-
-
     <!--    </RelativeLayout>-->
-
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/local_music_rv"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_above="@+id/local_music_bottom_layout">-->
-    <!--    </androidx.recyclerview.widget.RecyclerView>-->
-
     <!--</RelativeLayout>-->
-<!--    <ListView-->
-<!--        android:id="@+id/list_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
-    <!--    <Button-->
-    <!--        android:id="@+id/list_item"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text=""-->
-    <!--        />-->
+
