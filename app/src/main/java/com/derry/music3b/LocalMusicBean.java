@@ -10,7 +10,7 @@ public class LocalMusicBean {
     private String album;
     private int duration;//歌曲时长
     private String path;//歌曲路径
-
+//通过在构造函数中执行数据库插入操作，将歌曲名和歌手名插入到名为 "music_table" 的表中
     public LocalMusicBean(Context context, String song, String singer) {
         this.song = song;
         this.singer = singer;
